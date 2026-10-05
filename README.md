@@ -91,7 +91,8 @@ Python 3.12 et Git sont installés automatiquement s'ils manquent.
 5. Une fenêtre de commande s'ouvre et déroule l'installation. Attends le message de fin.
 6. **Vérifie sur le site** : ton PC apparaît dans **Mes Workers**, avec une pastille verte « en ligne ».
 
-> **Avertissement Windows SmartScreen.** L'exécutable n'est pas signé par un éditeur reconnu : Windows affiche
+> **Avertissement Windows SmartScreen.** L'exécutable est signé par un certificat propre à Alpine Makers, que
+> Windows ne connaît pas : il affiche
 > « Windows a protégé votre ordinateur ». Clique sur **Informations complémentaires**, puis **Exécuter quand même**.
 > Pour vérifier ton fichier avant de le lancer, compare son empreinte à `SHA256SUMS.txt` :
 >
@@ -116,8 +117,9 @@ Il n'installe **aucun moteur ni modèle** : cela se fait depuis le site. Tu peux
 
 ## 4. Utilisation au quotidien
 
-Presque tout se fait **depuis le site**. Sur le PC, un seul fichier à connaître :
-**`MENU-WORKER.bat`**, dans le dossier installé. Chaque entrée explique ce qu'elle fait avant d'agir.
+Presque tout se fait **depuis le site**. Sur le PC, une seule chose à connaître : le **menu du Worker**.
+Ouvre **`worker.exe`** (raccourci « Alpine Makers Worker » sur le Bureau) ou, en secours, **`MENU-WORKER.bat`**
+dans le dossier installé : les entrées sont les mêmes, et chacune explique ce qu'elle fait avant d'agir.
 
 | Je veux… | Comment |
 | --- | --- |

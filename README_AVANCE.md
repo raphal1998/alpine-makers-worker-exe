@@ -134,7 +134,7 @@ Signaler un problème de sécurité : écris à l’équipe Alpine Makers (coord
 | Lancement | Double-clic, fenêtre de saisie du code | `install_windows.bat` |
 | Adresse du site | Déjà inscrite dans l'exécutable | Demandée ou passée en paramètre |
 | Linux | Non | Oui (`install_linux.sh`) |
-| Transparence | Exécutable non signé : Windows SmartScreen avertit | Tout est lisible avant exécution |
+| Transparence | Exécutable signé par un certificat autosigné « Alpine Makers » : Windows SmartScreen avertit quand même | Tout est lisible avant exécution |
 
 ### Architecture de l'exécutable
 
