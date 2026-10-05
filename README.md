@@ -1,0 +1,213 @@
+# Worker Alpine Makers — installateur Windows (.exe)
+
+Ce dépôt contient la **version actuelle de l'installateur Windows du Worker Alpine Makers** :
+un seul fichier, `alpine-makers-worker-setup.exe`. C'est exactement celui que le site propose avec
+« Télécharger l'installateur Windows ».
+
+> Tu préfères voir les fichiers et lancer les scripts toi-même ? Voir le dépôt jumeau
+> [alpine-makers-worker-files](https://github.com/raphal1998/alpine-makers-worker-files). Les deux installent
+> **le même Worker**.
+
+| Document | Pour qui |
+| --- | --- |
+| **README.md** (ce fichier) | Tout le monde : comprendre, installer, utiliser, dépanner. |
+| [README_AVANCE.md](README_AVANCE.md) | Lecteurs techniques : architecture, sécurité, maintenance. |
+| [UPDATE.md](UPDATE.md) | Historique des versions. |
+| `SHA256SUMS.txt` | Empreinte de l'exécutable publié, pour vérifier ton téléchargement. |
+
+---
+
+## 1. Qu'est-ce qu'un Worker ?
+
+Le **Dashboard Alpine Makers** est un site web (<https://dashboard.alpine-makers.ch>). Il sait préparer des
+impressions 3D, générer des images et des modèles 3D par IA, convertir des fichiers, piloter une graveuse laser,
+surveiller une impression… mais **il ne calcule rien lui-même**.
+
+Le **Worker** est un petit programme que tu installes **sur ton propre PC**. Il prête la puissance de ton PC
+(surtout sa carte graphique) à ton compte du Dashboard.
+
+```text
+   Ton navigateur ──────► Dashboard (site web) ◄────── Worker (sur ton PC)
+                              donne le travail            fait le calcul, renvoie le résultat
+```
+
+### Pourquoi il tourne chez toi
+
+- Les moteurs d'IA ont besoin d'une **carte graphique** : la tienne.
+- Tes imprimantes, caméras et graveuses sont sur **ton réseau local** : seul un programme chez toi peut les joindre.
+- Tes modèles et tes fichiers restent **sur ton disque**.
+
+### Ce que le Worker permet au Dashboard de faire
+
+| Outil du site | Moteur lancé par le Worker |
+| --- | --- |
+| Générateur d'image IA | ComfyUI (Stable Diffusion, FLUX…) |
+| Générateur de modèle 3D IA | Hunyuan3D et moteurs associés |
+| Convertisseur 2D / 3D | FreeCAD |
+| Alpine Model Studio (tranchage) | OrcaSlicer |
+| Surveillance d'impression | PrintGuard |
+| Alpine Laser Studio, imprimantes, caméras | Relais vers les machines de ton réseau |
+
+Aucun moteur n'est installé d'office : tu choisis ensuite sur le site, dans **Mes Workers → Installations**.
+
+### Comment ils se parlent
+
+- C'est **toujours le Worker qui appelle le site**, en HTTPS sortant. Il n'ouvre **aucun port** vers Internet :
+  rien à régler sur ta box ni sur ton pare-feu.
+- Il se signale au site toutes les **20 secondes**. Sans signe de vie pendant **75 secondes**, le site l'affiche
+  « hors ligne » et ne lui confie plus rien.
+- Le site ne peut lui demander qu'une **liste fermée d'actions** connues. Aucune commande libre.
+- Chaque PC a sa propre **clé d'identité**, créée à l'installation et jamais envoyée.
+
+---
+
+## 2. Prérequis
+
+| Élément | Exigence |
+| --- | --- |
+| Système | **Windows 10 ou 11** (64 bits). Pour Linux, utilise le dépôt « fichiers ». |
+| Carte graphique | **NVIDIA** avec son pilote installé (`nvidia-smi` doit répondre). AMD, Intel et Mac ne sont pas pris en charge pour les moteurs d'IA. |
+| Compte Windows | Ton compte habituel : le Worker lui est attaché. Les droits administrateur ne sont **pas** obligatoires pour installer. |
+| Disque | Le Worker pèse quelques Mo. Chaque moteur demande au moins **8 Go libres**, chaque modèle plusieurs Go. |
+| Compte Dashboard | Un compte sur <https://dashboard.alpine-makers.ch>. |
+| Internet | Connexion sortante HTTPS. |
+
+Python 3.12 et Git sont installés automatiquement s'ils manquent.
+
+---
+
+## 3. Installation pas à pas
+
+1. **Télécharge l'installateur.** Sur cette page GitHub, clique sur `alpine-makers-worker-setup.exe`, puis sur
+   **Download raw file** (icône de téléchargement). (Ou, depuis le site : **Mes Workers → Télécharger
+   l'installateur Windows** — c'est le même contenu.)
+2. **Demande un code d'association.** Sur le site : **Mes Workers → Associer un PC**. Le code est valable
+   **10 minutes** et ne sert **qu'une fois**.
+3. **Lance `alpine-makers-worker-setup.exe`** (double-clic).
+4. Dans la fenêtre « Installation du Worker Alpine Makers » :
+   - saisis ton **code d'association** (ou laisse vide pour le saisir à l'étape suivante) ;
+   - coche ou non **« Démarrer le Worker automatiquement à l'ouverture de ma session Windows »** ;
+   - clique sur **Installer**.
+5. Une fenêtre de commande s'ouvre et déroule l'installation. Attends le message de fin.
+6. **Vérifie sur le site** : ton PC apparaît dans **Mes Workers**, avec une pastille verte « en ligne ».
+
+> **Avertissement Windows SmartScreen.** L'exécutable n'est pas signé par un éditeur reconnu : Windows affiche
+> « Windows a protégé votre ordinateur ». Clique sur **Informations complémentaires**, puis **Exécuter quand même**.
+> Pour vérifier ton fichier avant de le lancer, compare son empreinte à `SHA256SUMS.txt` :
+>
+> ```powershell
+> Get-FileHash .\alpine-makers-worker-setup.exe -Algorithm SHA256
+> ```
+
+> **L'adresse du site est déjà inscrite dans l'installateur** (`https://dashboard.alpine-makers.ch`) : tu n'as
+> pas à la saisir.
+
+### Ce que l'installateur fait
+
+- extrait le dossier du Worker dans un emplacement temporaire, puis lance son script d'installation ;
+- installe Python 3.12 et Git s'ils manquent ;
+- crée le dossier `alpine-makers-worker` sur ton Bureau et le **réserve à ton compte** ;
+- crée la clé d'identité du PC et l'associe à ton compte avec le code ;
+- crée, si tu as coché la case, une tâche planifiée « Alpine Makers Worker … » à l'ouverture de session.
+
+Il n'installe **aucun moteur ni modèle** : cela se fait depuis le site. Tu peux supprimer l'exécutable ensuite.
+
+---
+
+## 4. Utilisation au quotidien
+
+Presque tout se fait **depuis le site**. Sur le PC, un seul fichier à connaître :
+**`MENU-WORKER.bat`**, dans le dossier installé. Chaque entrée explique ce qu'elle fait avant d'agir.
+
+| Je veux… | Comment |
+| --- | --- |
+| Voir si tout va bien | Menu **1 · État complet du Worker** |
+| Démarrer / reconnecter le Worker | Menu **5 · Reconnecter** |
+| Arrêter le Worker | Menu **11 · Éteindre le Worker** |
+| Le rallumer | Menu **12 · Rallumer le Worker** |
+| Le redémarrer | Menu **10 · Redémarrer l'agent** |
+| Changer le démarrage automatique | Menu **15 · Démarrage automatique** |
+| Lire les journaux | Menu **3 · Journaux** |
+| Préparer un rapport pour le support | Menu **4 · Rapport de diagnostic** |
+| Installer un moteur ou un modèle | Site : **Mes Workers → Installations** |
+
+### Vérifier qu'il fonctionne et qu'il est connecté
+
+1. Sur le site, **Mes Workers** : pastille verte et version affichée sur la carte du PC.
+2. Sur le PC, **menu 1** : il indique si l'agent tourne, depuis quand, et la date du dernier contact avec le site.
+
+### Récupérer les journaux
+
+- Dossier `logs\` de l'installation (un fichier par moteur, plus `outils-worker.log`).
+- **Menu 4** fabrique une archive de diagnostic à partager : les secrets n'y figurent pas.
+
+---
+
+## 5. Mise à jour
+
+Sur le site, **Mes Workers → Mettre à jour**. Le Worker télécharge la nouvelle version **depuis le Dashboard**,
+vérifie l'empreinte de chaque fichier, se remplace et redémarre. Tes moteurs, modèles, réglages et ton identité
+sont **conservés**. Rien n'est à réinstaller.
+
+Ce dépôt GitHub te permet de **consulter** la version actuelle et son historique ([UPDATE.md](UPDATE.md)) ; la mise
+à jour d'un Worker installé passe par le bouton du site : inutile de relancer l'installateur.
+
+---
+
+## 6. Désinstallation propre
+
+1. **Arrête le Worker** : menu **11**.
+2. **Retire le démarrage automatique** : menu **15**.
+3. (Facultatif) **Supprime les moteurs IA** pour libérer la place : menu **17** — plusieurs dizaines de Go, sans Corbeille.
+4. Sur le site, **Mes Workers → Supprimer** la fiche du PC.
+5. **Supprime le dossier** `Desktop\alpine-makers-worker`.
+
+> FreeCAD et le CUDA Toolkit, s'ils ont été installés, sont des logiciels Windows classiques :
+> ils se désinstallent depuis « Applications installées ».
+
+---
+
+## 7. Fichiers créés sur ton PC
+
+| Emplacement | Contenu |
+| --- | --- |
+| `Desktop\alpine-makers-worker\` | Tout le Worker : programme, moteurs (`components\`), modèles, caches, journaux (`logs\`). |
+| `…\config.json` et `…\config\` | Réglages et **clé d'identité du PC**. À ne jamais partager ni copier vers un autre PC. |
+| Tâche planifiée « Alpine Makers Worker … » | Seulement si tu as choisi le démarrage automatique. |
+
+Rien n'est écrit ailleurs, hormis Python/Git s'ils manquaient.
+
+---
+
+## 8. Dépannage courant
+
+| Symptôme | À faire |
+| --- | --- |
+| Le PC est « hors ligne » sur le site | Menu **5 · Reconnecter**, puis menu **1** pour lire l'état. Vérifie ta connexion Internet et l'heure du PC. |
+| « Code d'association invalide » | Le code a plus de 10 minutes ou a déjà servi : demandes-en un nouveau. |
+| « Identité existante conservée » à l'installation | Le dossier contient déjà une inscription : c'est normal, ton code n'a pas été consommé. Menu **7** ou **8** si la fiche a été supprimée sur le site. |
+| Installation d'un moteur refusée | Lis le message : carte NVIDIA absente, pilote trop ancien, VRAM ou disque insuffisant. |
+| « VRAM libre insuffisante » | Un autre moteur occupe la carte : menu **9** (arrêter un moteur) ou **16** (libérer la mémoire). |
+| Windows bloque le lancement de l'exécutable | SmartScreen : « Informations complémentaires → Exécuter quand même ». Vérifie d'abord l'empreinte (`SHA256SUMS.txt`). |
+| L'installateur dit qu'il est incomplet ou endommagé | Téléchargement interrompu : retélécharge le fichier. |
+| Rien ne marche après une mise à jour | Menu **10 · Redémarrer l'agent**, puis menu **4** pour un rapport. |
+
+---
+
+## 9. FAQ
+
+**Le Worker ouvre-t-il mon PC à Internet ?** Non. Il n'accepte aucune connexion entrante ; c'est lui qui appelle le site.
+
+**Le site peut-il exécuter n'importe quoi sur mon PC ?** Non. Seulement une liste fermée d'actions, chacune vérifiée par le Worker.
+
+**Faut-il laisser le PC allumé ?** Seulement quand tu veux utiliser ses moteurs ou ses machines depuis le site.
+
+**Puis-je installer le Worker sur plusieurs PC ?** Oui, chacun avec son propre code d'association. Ne copie jamais un dossier installé d'un PC à l'autre.
+
+**Mes fichiers partent-ils dans le cloud ?** Les calculs se font chez toi. Les résultats que tu demandes sont renvoyés au site pour s'afficher dans ton compte.
+
+**Et sous Linux ?** L'installateur `.exe` est réservé à Windows ; le dépôt « fichiers » contient `install_linux.sh`.
+
+---
+
+*Alpine Makers — le Worker est fourni tel quel, sans garantie. Chaque moteur et chaque modèle installé garde sa propre licence, affichée sur le site avant installation.*
