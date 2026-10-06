@@ -1,5 +1,22 @@
 # Historique des mises à jour
 
+## Version 1.43.0 — 2026-10-06
+
+**Modèles à clé CivitAI, modèles retirés encore publiés, notices des modèles du référentiel**
+
+### Ajouté
+- Un modèle du catalogue hébergé par CivitAI se télécharge avec la clé CivitAI propre au propriétaire du Worker (Mes APIs). La clé arrive avec la commande, n’est envoyée qu’à CivitAI et n’est jamais écrite sur le disque du Worker ; le fichier reste épinglé par SHA-256.
+- Sans clé ou avec une clé refusée, l’installation s’arrête avec la marche à suivre au lieu d’une erreur brute.
+
+### Modifié
+- La clé d’accès jointe à une commande n’est plus renvoyée au site lors du précontrôle des conditions.
+
+### Corrigé
+- L’installation d’un modèle du référentiel public se terminait par « Notice documentaire absente » après le téléchargement : le paquet livre désormais le dossier documentaire de chacun de ces modèles.
+
+### Technique
+- Empreinte du paquet publié : `c997a25f75d4a272…` (installateur Windows).
+
 ## Version 1.42.0 — 2026-10-05
 
 **worker.exe : le menu du Worker devient une application, exécutables signés et à l’image d’Alpine Makers**
