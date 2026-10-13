@@ -1,5 +1,11 @@
 # Historique des mises à jour
 
+## Version 1.50.9 — 2026-10-14
+
+### Technique
+- Révision du paquet : contenu du paquet modifié sans changement de numéro de version.
+- Empreinte du paquet publié : `70fa757001a9eeec…` (installateur Windows).
+
 ## Version 1.50.9 — 2026-10-12
 
 **Capture USB : le processus de capture s'arrête avec l'agent (plus d'orphelin qui garde la caméra)**
