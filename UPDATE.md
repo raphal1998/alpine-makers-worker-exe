@@ -1,5 +1,23 @@
 # Historique des mises à jour
 
+## Version 1.50.14 — 2026-10-14
+
+**Caméras : vue fluide sur le site, résolution et cadence libres (jusqu'à 3840×2160 et 120 images/s)**
+
+### Ajouté
+- Vue fluide de la page « Voir caméra » du site : dès qu'une vue est ouverte, le Worker pousse au site la dernière image disponible, réduite au profil de la fiche (« Vue du site » : fluide 960 px à 20 images/s, équilibrée 1280 px à 15, nette 1920 px à 10, ou cadence, largeur et qualité JPEG personnalisées), par une connexion gardée ouverte. Rien n'est mis en file : une image en retard est sautée, et quand le lien montant ne suit pas le Worker baisse la qualité, puis la taille. Sans vue ouverte, il n'envoie rien de plus qu'avant. Capacité equipment_camera_live_v1.
+- Format libre des caméras USB et des webcams : résolution jusqu'à 3840×2160, capture et lien MJPEG local de 1 à 120 images par seconde (au-delà de 30, cette version est requise). La caméra fournit ce qu'elle peut : le message de la fiche indique la taille et la cadence réellement obtenues à côté de celles demandées.
+
+### Modifié
+- Une image de caméra peut peser jusqu'à 4 Mio sur le Worker (4K) ; l'image jointe au rapport du site reste sous 1 Mio, recompressée seulement quand elle le dépasse.
+- Les images que le Worker vient d'encoder lui-même ne sont plus décodées en entier une seconde fois à chaque image (en-tête à chaque image, décodage complet une fois par seconde) : moins de processeur à cadence élevée.
+
+### Corrigé
+- Le lien MJPEG local servait environ 22 images/s pour 30 demandées : chaque image décalait la suivante d'une période entière plus le temps d'envoi. La cadence demandée est maintenant tenue (composant relais 1.2.0).
+
+### Technique
+- Empreinte du paquet publié : `14393ae3b8118633…` (installateur Windows).
+
 ## Version 1.50.13 — 2026-10-14
 
 **worker.exe : ajouter un co-propriétaire (Worker, équipements ou les deux)**
