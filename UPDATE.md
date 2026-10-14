@@ -1,5 +1,18 @@
 # Historique des mises à jour
 
+## Version 1.50.15 — 2026-10-14
+
+**Alpine CNC Studio : moteur CNC installable sur le Worker (cnc-engine)**
+
+### Ajouté
+- Nouvel outil « Alpine CNC Studio » dans Installations de Mes Workers : composant cnc-engine (environnement Python isolé, bibliothèque standard seulement) qui valide et analyse les programmes de fraisage pour le compte qui l'a installé : erreurs et avertissements, étendue, durée estimée, outils et pauses, broche, arrosage, contrôle de course. Démarrage et arrêt à la demande comme Alpine Laser Studio, pastille on/off partout sur le site. Capacité cnc_engine_v1.
+
+### Corrigé
+- Validateur de G-code CNC : un G53 ou G28 qui suivait un mouvement effaçait ce mouvement des bornes calculées (copie de la position corrigée).
+
+### Technique
+- Empreinte du paquet publié : `b2016f1ee43b892a…` (installateur Windows).
+
 ## Version 1.50.14 — 2026-10-14
 
 **Caméras : vue fluide sur le site, résolution et cadence libres (jusqu'à 3840×2160 et 120 images/s)**
