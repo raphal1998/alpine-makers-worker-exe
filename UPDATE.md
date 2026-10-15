@@ -4,6 +4,12 @@
 
 ### Technique
 - Révision du paquet : contenu du paquet modifié sans changement de numéro de version.
+- Empreinte du paquet publié : `22adf4f09d540803…` (installateur Windows).
+
+## Version 1.50.17 — 2026-10-15
+
+### Technique
+- Révision du paquet : contenu du paquet modifié sans changement de numéro de version.
 - Empreinte du paquet publié : `d9e4d37689258201…` (installateur Windows).
 
 ## Version 1.50.17 — 2026-10-15
