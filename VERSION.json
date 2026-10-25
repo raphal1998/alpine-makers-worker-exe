@@ -1,8 +1,8 @@
 {
   "worker_type": "EXE",
-  "version": "1.50.38",
-  "source_hash": "ccc8376fcc44bd34ac5d666be90b2129c27599aac5e816a3795e29fd3abba6f1",
-  "published_at": "2026-10-25_20-16-01-117",
-  "dashboard_commit": "47753bbd1ad75367e3b234629d71e0fadea8d4b2",
+  "version": "1.50.40",
+  "source_hash": "5124c16178a46d3da8e3158076c93d789ec20af063e90b41df543a727ae45c45",
+  "published_at": "2026-10-25_21-59-06-362",
+  "dashboard_commit": "2f17ef7b1c34af229be7856086cc0df790b64d5e",
   "hash_method": "SHA-256 de la liste triée « chemin, SHA-256 du contenu » des fichiers du paquet + sources de l'amorce + adresse du dashboard"
 }
