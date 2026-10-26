@@ -1,5 +1,11 @@
 # Historique des mises à jour
 
+## Version 1.50.44 — 2026-10-27
+
+### Technique
+- Révision du paquet : contenu du paquet modifié sans changement de numéro de version.
+- Empreinte du paquet publié : `ff61fa5bda2768d4…` (installateur Windows).
+
 ## Version 1.50.44 — 2026-10-26
 
 **Broche d’une CNC : tr/min convertis sur l’échelle S de la carte, plafond S détecté**
