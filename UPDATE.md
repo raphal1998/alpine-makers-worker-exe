@@ -2,6 +2,12 @@
 
 ## Version 1.53.6 — 2026-11-03
 
+### Technique
+- Révision du paquet : contenu du paquet modifié sans changement de numéro de version.
+- Empreinte du paquet publié : `90d5edcfc72e6337…` (installateur Windows).
+
+## Version 1.53.6 — 2026-11-03
+
 **CNC Studio de worker.exe : enregistrement au Format Alpine (.acsproj scellé par le site) ou en G-code**
 
 ### Ajouté
