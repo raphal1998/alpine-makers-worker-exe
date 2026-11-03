@@ -1,2 +1,2 @@
-bbcbfdcca40318d808e27b971ad40add92128e073c81a7806349ce2bb397c42a  alpine-makers-worker-setup.exe
-c1429ff414cf472ac15f53841d27b559a3366cec53069119042909a54280ebad  paquet-embarque.zip (contenu identique au dépôt alpine-makers-worker-files)
+becb24da05eb7171746d00b04808215f36a2d24ce4f74f18fd162843bc6dc9f1  alpine-makers-worker-setup.exe
+f24a76d86f3d952aba22bf8cc95393989cffb4c104b68c66ad6d30229dcb1599  paquet-embarque.zip (contenu identique au dépôt alpine-makers-worker-files)
